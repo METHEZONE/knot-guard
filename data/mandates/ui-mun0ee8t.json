@@ -1,0 +1,21 @@
+{
+  "v": 1,
+  "id": "ui-mun0ee8t",
+  "owner": "rUoSJbhbVAkyehPR6DLzo8d5dz1Gysknis",
+  "agent": "rNnqoFU2Xxq6J1g8CdopQrNV94RUnDU1hL",
+  "budgetDrops": 8000000,
+  "allow": [
+    {
+      "id": "lumen",
+      "name": "Lumen",
+      "addr": "rNN4EdkqrNbeyVPgcARrHuBuXaTGN7agus"
+    },
+    {
+      "id": "orbit",
+      "name": "Orbit",
+      "addr": "rfn3yToDmrXdJ7A68wkjWiqqAi3BY6qmFW"
+    }
+  ],
+  "deadlineUnix": 1790710073,
+  "purpose": "UI grant"
+}

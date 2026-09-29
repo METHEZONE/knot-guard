@@ -8,6 +8,10 @@ Built for **GWDC 2026 Korea Hackathon · FuriosaAI x Bricksum Bonus Track · Cha
 
 ---
 
+**Deck (10 pages):** [`docs/knot-guard-deck.pdf`](docs/knot-guard-deck.pdf) · **Demo video (2:34):** [`docs/knot-guard-demo.mp4`](docs/knot-guard-demo.mp4)
+
+---
+
 ## 1. User and problem
 
 **User:** a person (or founder) who lets an AI agent buy things — SaaS subscriptions, API credits, transcription packs — with their money.
@@ -140,6 +144,7 @@ npm run server              # human console on http://localhost:4791
 - Testnet only; the marketplace and seller agents are simulated. Seller price floors are enforced in code; the seller LLM only writes the message.
 - The guard and the agent wallet key live in the same process. Production hardening: XRPL multi-signing (owner co-signs above a threshold), `DepositPreauth` on merchants, and `Escrow` for settle-on-delivery — the on-chain records and audit stay the same.
 - Energy numbers are assumptions (see §6). `gpt-oss-120b` was unavailable on Kiln at submission time (see §6).
+- The demo video also shows live runs from the console (mandate ids `ui-*`); those are extra on-chain records on the same accounts and are not counted in the tables above.
 - Disclosure on R5: it reused cached intake/select responses from R4 (same request text) — that is the cache doing its job; the original calls are in `kiln-calls.json`.
 
 ## Repo map
