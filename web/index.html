@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>knot Guard — controls & records for an AI agent that spends</title>
+<style>
+:root{--ink:#161412;--paper:#f6f1e9;--card:#fffdf9;--line:#e4dccf;--orange:#ff5a1f;--green:#1f8a4c;--red:#c93a2b;--mute:#7a7268}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Inter","Pretendard",sans-serif;letter-spacing:-.01em}
+header{padding:28px 40px 8px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+h1{font-size:26px;margin:0;letter-spacing:-.03em}h1 b{color:var(--orange)}.sub{color:var(--mute)}
+main{display:grid;grid-template-columns:380px 1fr;gap:20px;padding:16px 40px 48px;max-width:1400px}
+@media(max-width:1000px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--mute);margin:0 0 12px}
+label{display:block;font-size:13px;color:var(--mute);margin:10px 0 4px}input[type=text],input[type=number],select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:#fff;font:inherit}
+textarea{min-height:64px;resize:vertical}button{cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:600;background:var(--ink);color:#fff}button.o{background:var(--orange)}button.r{background:var(--red)}button.g{background:#fff;color:var(--ink);border:1px solid var(--line)}button:disabled{opacity:.5;cursor:wait}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.chk{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}.chk label{margin:0;color:var(--ink)}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:700}.ok{background:#dff3e6;color:var(--green)}.no{background:#fbe1dd;color:var(--red)}.mu{background:#ece6da;color:var(--mute)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}
+a{color:var(--orange);text-decoration:none}a:hover{text-decoration:underline}.mono{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.bar{height:8px;background:#efe8db;border-radius:9px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--orange)}
+pre{white-space:pre-wrap;background:#faf5ec;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12.5px;margin:10px 0 0}
+.kpi{display:flex;gap:22px;flex-wrap:wrap}.kpi div b{display:block;font-size:20px;letter-spacing:-.02em}.kpi div span{font-size:12px;color:var(--mute)}
+</style></head><body>
+<header><h1>knot <b>Guard</b></h1><span class="sub">Controls and records for an AI agent that spends · <span id="net"></span> · model <span id="model"></span></span></header>
+<main>
+<div>
+  <div class="card"><h2>1 · Grant a budget (you sign it)</h2>
+    <label>Budget (XRP)</label><input id="budget" type="number" value="10" step="0.5">
+    <label>Allowed shops</label><div class="chk"><label><input type="checkbox" value="lumen" checked> Lumen</label><label><input type="checkbox" value="orbit" checked> Orbit</label><label><input type="checkbox" value="shadyshop"> ShadyShop</label></div>
+    <label>Valid for (minutes)</label><input id="mins" type="number" value="60">
+    <div class="row" style="margin-top:14px"><button class="o" onclick="grant(this)">Grant on-chain</button></div><div id="grantOut" class="sub" style="margin-top:8px;font-size:13px"></div></div>
+  <div class="card"><h2>2 · Ask the agent</h2>
+    <label>Mandate</label><select id="mid"></select>
+    <label>Request</label><textarea id="text">Buy me a 1-month AI code review subscription. Keep it under 7 XRP.</textarea>
+    <div class="chk"><label><input id="naive" type="checkbox"> naive agent (shows the LLM every listing, incl. a prompt-injected one)</label></div>
+    <div class="row" style="margin-top:12px"><button class="o" onclick="ask(this)">Run agent</button><button class="g" onclick="hijack(this)">Simulate hijacked agent</button></div>
+    <pre id="askOut" style="display:none"></pre></div>
+  <div class="card"><h2>Accounts</h2><div class="kpi"><div><b id="ob">–</b><span>Owner XRP</span></div><div><b id="ab">–</b><span>Agent XRP</span></div></div>
+    <div class="mono" style="margin-top:10px">owner <a id="oa" target="_blank"></a><br>agent <a id="aa" target="_blank"></a></div></div>
+</div>
+<div>
+  <div class="card"><h2>Your mandates</h2><table><thead><tr><th>Mandate</th><th>Allowed</th><th>Spent / budget</th><th>Status</th><th></th></tr></thead><tbody id="mand"></tbody></table></div>
+  <div class="card"><h2>What the agent did (read from the ledger)</h2><table><thead><tr><th>Run</th><th>Decision</th><th>Merchant</th><th>Total</th><th>Tx</th><th></th></tr></thead><tbody id="dec"></tbody></table><div id="auditOut"></div></div>
+  <div class="card"><h2>Kiln token usage per flow · energy estimate (assumed J/token)</h2><table><thead><tr><th>Flow</th><th>Calls</th><th>Cache hits</th><th>Prompt</th><th>Completion</th><th>Total</th><th>NPU J</th><th>GPU J</th></tr></thead><tbody id="use"></tbody></table><div class="sub" id="useNote" style="font-size:12px;margin-top:8px"></div></div>
+</div></main>
+<script>
+const $=(i)=>document.getElementById(i);let S;
+const api=async(p,b)=>{const r=await fetch(p,b?{method:'POST',body:JSON.stringify(b)}:{});const j=await r.json();if(j.error)throw new Error(j.error);return j};
+const pill=(v,t)=>`<span class="pill ${v}">${t}</span>`;
+async function load(){S=await api('/api/state');$('net').textContent=S.network;$('model').textContent=S.model;
+ $('ob').textContent=S.owner.xrp.toFixed(2);$('ab').textContent=S.agent.xrp.toFixed(2);
+ $('oa').textContent=S.owner.addr;$('oa').href=S.owner.url;$('aa').textContent=S.agent.addr;$('aa').href=S.agent.url;
+ const cur=$('mid').value;$('mid').innerHTML=S.mandates.map(m=>`<option value="${m.id}" ${m.revoked||m.expired?'disabled':''}>${m.id} · ${m.budgetXrp} XRP · ${m.allow.join('+')}${m.revoked?' · STOPPED':m.expired?' · expired':''}</option>`).join('');if(cur)$('mid').value=cur;
+ $('mand').innerHTML=S.mandates.map(m=>`<tr><td><span class="mono">${m.id}</span><br><a target="_blank" href="${m.grantTx}">grant tx</a></td><td>${m.allow.join(', ')}</td><td>${m.spentXrp.toFixed(2)} / ${m.budgetXrp}<div class="bar"><i style="width:${Math.min(100,m.spentXrp/m.budgetXrp*100)}%"></i></div></td><td>${m.revoked?pill('no','STOPPED'):m.expired?pill('mu','EXPIRED'):pill('ok','ACTIVE')}</td><td>${!m.revoked&&!m.expired?`<button class="r" onclick="stop('${m.id}',this)">STOP</button>`:m.revokeTx?`<a target="_blank" href="${m.revokeTx}">revoke tx</a>`:''}</td></tr>`).join('');
+ $('dec').innerHTML=S.decisions.map(d=>`<tr><td class="mono">${d.label}</td><td>${d.verdict==='ALLOW'?pill('ok','PAID'):pill('no','STOPPED')} <span class="mono">${d.reasons.join(', ')}</span></td><td>${d.merchant}</td><td>${d.totalXrp.toFixed(2)} XRP</td><td><a target="_blank" href="${d.explorer}">${d.hash.slice(0,8)}…</a></td><td><button class="g" onclick="audit('${d.hash}',this)">Audit</button></td></tr>`).join('');
+ $('use').innerHTML=S.usage.rows.map(r=>`<tr><td>${r.flow}</td><td>${r.calls}</td><td>${r.cacheHits}</td><td>${r.prompt}</td><td>${r.completion}</td><td>${r.total}</td><td>${r.npuJ}</td><td>${r.gpuJ}</td></tr>`).join('')||'<tr><td colspan=8 class="sub">no calls yet in this session</td></tr>';
+ $('useNote').textContent=`Assumed ${S.usage.assumptions.jPerTokenNpu} J/token (NPU) vs ${S.usage.assumptions.jPerTokenGpu} J/token (GPU baseline). Kiln exposes no energy telemetry — see README.`}
+async function wrap(btn,fn){btn.disabled=true;try{await fn()}catch(e){alert(e.message)}finally{btn.disabled=false;load()}}
+const grant=(b)=>wrap(b,async()=>{const allow=[...document.querySelectorAll('.chk input[value]')].filter(c=>c.checked&&c.value).map(c=>c.value);const r=await api('/api/grant',{budgetXrp:$('budget').value,allow,minutes:$('mins').value});$('grantOut').innerHTML=`Granted <b>${r.id}</b> — <a target="_blank" href="${r.tx}">on-chain record</a>`});
+const stop=(id,b)=>wrap(b,async()=>{await api('/api/revoke',{id})});
+const show=(r)=>{const o=$('askOut');o.style.display='block';o.textContent=`${r.verdict}${r.reasons.length?' — '+r.reasons.join(', '):''}\n${r.merchant??''} ${r.priceXrp} XRP (+fee ${r.feeXrp})\n\n`+r.log.join('\n')+`\n\ntx ${r.explorer}`};
+const ask=(b)=>wrap(b,async()=>show(await api('/api/purchase',{id:$('mid').value,text:$('text').value,aware:!$('naive').checked})));
+const hijack=(b)=>wrap(b,async()=>show(await api('/api/purchase',{id:$('mid').value,text:'hijacked',forced:'shady-review'})));
+const audit=(h,b)=>wrap(b,async()=>{const a=await api('/api/audit',{hash:h});$('auditOut').innerHTML=`<pre><b>${a.label} → ${a.verdict}</b>\n`+a.checks.map(c=>(c.ok?'✔ ':'✘ ')+c.name+'  ['+c.detail+']').join('\n')+`\n\n“${a.story}”</pre>`});
+load();setInterval(()=>{if(!document.hidden)load().catch(()=>{})},15000);
+</script></body></html>

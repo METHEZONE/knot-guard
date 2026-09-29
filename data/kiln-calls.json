@@ -1,0 +1,102 @@
+[
+  {
+    "at": "2026-09-29T18:14:56.614Z",
+    "flow": "intake",
+    "model": "qwen3-32b",
+    "id": "chat-a5a05dc0e617459889a7a9eb2ed91098",
+    "prompt_tokens": 91,
+    "completion_tokens": 23,
+    "reasoning_tokens": 1,
+    "ms": 869
+  },
+  {
+    "at": "2026-09-29T18:14:57.616Z",
+    "flow": "select",
+    "model": "qwen3-32b",
+    "id": "chat-0cf10d63884544baa1da9e9a9ef3f5f6",
+    "prompt_tokens": 185,
+    "completion_tokens": 28,
+    "reasoning_tokens": 1,
+    "ms": 978
+  },
+  {
+    "at": "2026-09-29T18:14:59.011Z",
+    "flow": "negotiate",
+    "model": "qwen3-32b",
+    "id": "chat-f36dab34e1df408d961838ca1bbe893e",
+    "prompt_tokens": 96,
+    "completion_tokens": 36,
+    "reasoning_tokens": 1,
+    "ms": 1017
+  },
+  {
+    "at": "2026-09-29T18:14:59.943Z",
+    "flow": "negotiate",
+    "model": "qwen3-32b",
+    "id": "chat-c5b2b980f53245d6b59ad5ae3803c1a4",
+    "prompt_tokens": 99,
+    "completion_tokens": 27,
+    "reasoning_tokens": 1,
+    "ms": 932
+  },
+  {
+    "at": "2026-09-29T18:15:13.251Z",
+    "flow": "intake",
+    "model": "qwen3-32b",
+    "id": "chat-bc597a7153a048daab6ed70fee9ef3f4",
+    "prompt_tokens": 83,
+    "completion_tokens": 24,
+    "reasoning_tokens": 1,
+    "ms": 2132
+  },
+  {
+    "at": "2026-09-29T18:15:14.241Z",
+    "flow": "select",
+    "model": "qwen3-32b",
+    "id": "chat-862d6010cdd944c68988244c5aecc6b0",
+    "prompt_tokens": 137,
+    "completion_tokens": 23,
+    "reasoning_tokens": 1,
+    "ms": 990
+  },
+  {
+    "at": "2026-09-29T18:15:32.045Z",
+    "flow": "intake",
+    "model": "qwen3-32b",
+    "id": "chat-8cebd039142a463da34a176be7bae8ec",
+    "prompt_tokens": 77,
+    "completion_tokens": 23,
+    "reasoning_tokens": 1,
+    "ms": 2051
+  },
+  {
+    "at": "2026-09-29T18:15:33.045Z",
+    "flow": "select",
+    "model": "qwen3-32b",
+    "id": "chat-bffbe415bd7441468ae05cf9bec90fce",
+    "prompt_tokens": 233,
+    "completion_tokens": 24,
+    "reasoning_tokens": 1,
+    "ms": 999
+  },
+  {
+    "at": "2026-09-29T18:16:23.892Z",
+    "flow": "intake",
+    "model": "qwen3-32b",
+    "id": "chat-05bd4727cf7e4e9cad9c4a9f12167d0c",
+    "prompt_tokens": 77,
+    "completion_tokens": 23,
+    "reasoning_tokens": 1,
+    "ms": 2408
+  },
+  {
+    "at": "2026-09-29T18:16:25.062Z",
+    "flow": "select",
+    "model": "qwen3-32b",
+    "id": "chat-05c9b3b1d95d4f3ba9a891d0cb2b7ecc",
+    "prompt_tokens": 170,
+    "completion_tokens": 28,
+    "reasoning_tokens": 1,
+    "ms": 1170
+  }
+]

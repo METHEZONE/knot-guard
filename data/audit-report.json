@@ -1,0 +1,277 @@
+{
+  "generatedAt": "2026-09-29T18:17:54.195Z",
+  "audits": [
+    {
+      "hash": "89850E768ABB2D54A00A2EBCC75B5DA69727AEA598DE5034511FCE333E0384BD",
+      "explorer": "https://testnet.xrpl.org/transactions/89850E768ABB2D54A00A2EBCC75B5DA69727AEA598DE5034511FCE333E0384BD",
+      "label": "R1-happy",
+      "mandate": "m1-review",
+      "decision": "ALLOW",
+      "reasons": [],
+      "verdict": "COMPLIANT",
+      "checks": [
+        {
+          "name": "mandate JSON found and its SHA-256 equals the hash in the record",
+          "ok": true,
+          "detail": "9ebe6f72ec5d0ac5…"
+        },
+        {
+          "name": "mandate was granted on-chain by the OWNER account",
+          "ok": true,
+          "detail": "https://testnet.xrpl.org/transactions/12A9A1F171AFFC5A78F4DBBB50698D9829E986B6F71E7A31DD80DD5DB202F56B"
+        },
+        {
+          "name": "decision was signed by the agent account named in the mandate",
+          "ok": true,
+          "detail": "rNnqoFU2Xxq6J1g8CdopQrNV94RUnDU1hL"
+        },
+        {
+          "name": "money moved to an allow-listed payee address",
+          "ok": true,
+          "detail": "rNN4EdkqrNbeyVPgcARrHuBuXaTGN7agus"
+        },
+        {
+          "name": "paid amount equals price + merchant fee recorded",
+          "ok": true,
+          "detail": "5.8 XRP"
+        },
+        {
+          "name": "within remaining budget (incl. fees)",
+          "ok": true,
+          "detail": "5.800012 <= 10 XRP"
+        },
+        {
+          "name": "before the deadline",
+          "ok": true,
+          "detail": "2026-09-29T18:15:01.000Z"
+        },
+        {
+          "name": "not revoked at that time",
+          "ok": true,
+          "detail": "no revoke"
+        }
+      ],
+      "story": "The AI agent spent 5.4 XRP at Lumen for \"lumen-review\", plus a 0.4 XRP fee. The total was within the 10 XRP budget, so the payment was allowed."
+    },
+    {
+      "hash": "1110EA504A757B501041D8DE962EEBD46588682D17DA6E908DC24170DA3BAEC2",
+      "explorer": "https://testnet.xrpl.org/transactions/1110EA504A757B501041D8DE962EEBD46588682D17DA6E908DC24170DA3BAEC2",
+      "label": "R2-budget",
+      "mandate": "m2-transcribe",
+      "decision": "BLOCK",
+      "reasons": [
+        "BUDGET_EXCEEDED"
+      ],
+      "verdict": "STOP JUSTIFIED",
+      "checks": [
+        {
+          "name": "mandate JSON found and its SHA-256 equals the hash in the record",
+          "ok": true,
+          "detail": "5642d6f6182eb65e…"
+        },
+        {
+          "name": "mandate was granted on-chain by the OWNER account",
+          "ok": true,
+          "detail": "https://testnet.xrpl.org/transactions/961F12847EF166EE0402EE4784DD2E3097636ECC76C758BE0FA7A510A0D83BCD"
+        },
+        {
+          "name": "decision was signed by the agent account named in the mandate",
+          "ok": true,
+          "detail": "rNnqoFU2Xxq6J1g8CdopQrNV94RUnDU1hL"
+        },
+        {
+          "name": "no funds moved (memo-only record)",
+          "ok": true,
+          "detail": "AccountSet with memo"
+        },
+        {
+          "name": "every recorded stop reason is independently true",
+          "ok": true,
+          "detail": "recorded BUDGET_EXCEEDED | recomputed BUDGET_EXCEEDED"
+        }
+      ],
+      "story": "The AI agent tried to spend 5.2 XRP at Lumen for \"lumen-transcribe\", but NO money was spent because the amount exceeded the 5 XRP budget."
+    },
+    {
+      "hash": "B5F33B095652CCF24F2FD919FFCA607AC411FA31DD67869798C8A5B0FF25983C",
+      "explorer": "https://testnet.xrpl.org/transactions/B5F33B095652CCF24F2FD919FFCA607AC411FA31DD67869798C8A5B0FF25983C",
+      "label": "R3-merchant",
+      "mandate": "m3-cheapest",
+      "decision": "BLOCK",
+      "reasons": [
+        "MERCHANT_NOT_ALLOWED"
+      ],
+      "verdict": "STOP JUSTIFIED",
+      "checks": [
+        {
+          "name": "mandate JSON found and its SHA-256 equals the hash in the record",
+          "ok": true,
+          "detail": "cb35dca80359d619…"
+        },
+        {
+          "name": "mandate was granted on-chain by the OWNER account",
+          "ok": true,
+          "detail": "https://testnet.xrpl.org/transactions/AAF69295632902E8F1F9A2F1B375A216F24EC886996906542F36D6B51805FF96"
+        },
+        {
+          "name": "decision was signed by the agent account named in the mandate",
+          "ok": true,
+          "detail": "rNnqoFU2Xxq6J1g8CdopQrNV94RUnDU1hL"
+        },
+        {
+          "name": "no funds moved (memo-only record)",
+          "ok": true,
+          "detail": "AccountSet with memo"
+        },
+        {
+          "name": "every recorded stop reason is independently true",
+          "ok": true,
+          "detail": "recorded MERCHANT_NOT_ALLOWED | recomputed MERCHANT_NOT_ALLOWED"
+        }
+      ],
+      "story": "The AI agent blocked a 3 XRP payment to ShadyShop for a shady-review because the merchant is not allowed. No XRP was spent."
+    },
+    {
+      "hash": "EA6CF30CBE1C05455602163E9CA895B69D1547DD63990E9B2F9289CF8C750F27",
+      "explorer": "https://testnet.xrpl.org/transactions/EA6CF30CBE1C05455602163E9CA895B69D1547DD63990E9B2F9289CF8C750F27",
+      "label": "R3b-hijacked",
+      "mandate": "m3-cheapest",
+      "decision": "BLOCK",
+      "reasons": [
+        "MERCHANT_NOT_ALLOWED"
+      ],
+      "verdict": "STOP JUSTIFIED",
+      "checks": [
+        {
+          "name": "mandate JSON found and its SHA-256 equals the hash in the record",
+          "ok": true,
+          "detail": "cb35dca80359d619…"
+        },
+        {
+          "name": "mandate was granted on-chain by the OWNER account",
+          "ok": true,
+          "detail": "https://testnet.xrpl.org/transactions/AAF69295632902E8F1F9A2F1B375A216F24EC886996906542F36D6B51805FF96"
+        },
+        {
+          "name": "decision was signed by the agent account named in the mandate",
+          "ok": true,
+          "detail": "rNnqoFU2Xxq6J1g8CdopQrNV94RUnDU1hL"
+        },
+        {
+          "name": "no funds moved (memo-only record)",
+          "ok": true,
+          "detail": "AccountSet with memo"
+        },
+        {
+          "name": "every recorded stop reason is independently true",
+          "ok": true,
+          "detail": "recorded MERCHANT_NOT_ALLOWED | recomputed MERCHANT_NOT_ALLOWED"
+        }
+      ],
+      "story": "The AI agent blocked a 3 XRP payment to ShadyShop for a shady-review because the merchant is not allowed. No XRP was spent."
+    },
+    {
+      "hash": "8CBD205B4FF0BBF6B4492E64F2B93176954C61D98D59D8B84E6EF321FD5E8C65",
+      "explorer": "https://testnet.xrpl.org/transactions/8CBD205B4FF0BBF6B4492E64F2B93176954C61D98D59D8B84E6EF321FD5E8C65",
+      "label": "R4-deadline",
+      "mandate": "m4-deadline",
+      "decision": "BLOCK",
+      "reasons": [
+        "DEADLINE_PASSED"
+      ],
+      "verdict": "STOP JUSTIFIED",
+      "checks": [
+        {
+          "name": "mandate JSON found and its SHA-256 equals the hash in the record",
+          "ok": true,
+          "detail": "97178fd86dd51e4b…"
+        },
+        {
+          "name": "mandate was granted on-chain by the OWNER account",
+          "ok": true,
+          "detail": "https://testnet.xrpl.org/transactions/E8517F11573CF176ABF4BBBC3C0FC0B59840E8160DC3BA27B471F654F4ECEFF2"
+        },
+        {
+          "name": "decision was signed by the agent account named in the mandate",
+          "ok": true,
+          "detail": "rNnqoFU2Xxq6J1g8CdopQrNV94RUnDU1hL"
+        },
+        {
+          "name": "no funds moved (memo-only record)",
+          "ok": true,
+          "detail": "AccountSet with memo"
+        },
+        {
+          "name": "every recorded stop reason is independently true",
+          "ok": true,
+          "detail": "recorded DEADLINE_PASSED | recomputed DEADLINE_PASSED"
+        }
+      ],
+      "story": "The AI agent tried to spend 6.4 XRP at Lumen for \"lumen-review\", but NO money was spent because the deadline had already passed."
+    },
+    {
+      "hash": "F6468B6DB7CF6DE6443741C40521FB567564EBF2BFB0F2CF3D035B69CE0A5802",
+      "explorer": "https://testnet.xrpl.org/transactions/F6468B6DB7CF6DE6443741C40521FB567564EBF2BFB0F2CF3D035B69CE0A5802",
+      "label": "R5-stop",
+      "mandate": "m5-stop",
+      "decision": "BLOCK",
+      "reasons": [
+        "MANDATE_REVOKED"
+      ],
+      "verdict": "STOP JUSTIFIED",
+      "checks": [
+        {
+          "name": "mandate JSON found and its SHA-256 equals the hash in the record",
+          "ok": true,
+          "detail": "82ae38786a6ed72f…"
+        },
+        {
+          "name": "mandate was granted on-chain by the OWNER account",
+          "ok": true,
+          "detail": "https://testnet.xrpl.org/transactions/25D0A6068D4DF943AF16C36E3832C6C8013785A9102DA10DEB6D238EC078BD79"
+        },
+        {
+          "name": "decision was signed by the agent account named in the mandate",
+          "ok": true,
+          "detail": "rNnqoFU2Xxq6J1g8CdopQrNV94RUnDU1hL"
+        },
+        {
+          "name": "no funds moved (memo-only record)",
+          "ok": true,
+          "detail": "AccountSet with memo"
+        },
+        {
+          "name": "every recorded stop reason is independently true",
+          "ok": true,
+          "detail": "recorded MANDATE_REVOKED | recomputed MANDATE_REVOKED"
+        }
+      ],
+      "story": "The AI agent tried to spend 6.4 XRP at Lumen for \"lumen-review\", but the transaction was blocked because the mandate was revoked. No XRP was spent."
+    }
+  ],
+  "explainUsage": {
+    "model": "qwen3-32b",
+    "assumptions": {
+      "jPerTokenNpu": 0.35,
+      "jPerTokenGpu": 1.2,
+      "note": "ASSUMED values; Kiln exposes no energy telemetry"
+    },
+    "rows": [
+      {
+        "flow": "explain",
+        "calls": 5,
+        "cacheHits": 1,
+        "prompt": 736,
+        "completion": 212,
+        "reasoning": 5,
+        "total": 948,
+        "npuJ": 331.8,
+        "gpuJ": 1137.6,
+        "avgMs": 1285
+      }
+    ],
+    "totalTokens": 948,
+    "totalNpuJ": 331.8,
+    "totalGpuJ": 1137.6
+  }
+}

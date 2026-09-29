@@ -1,0 +1,16 @@
+{
+  "name": "knot-guard",
+  "version": "0.1.0",
+  "description": "Mandate-guarded AI spending agent with on-chain receipts (Solana devnet) powered by Kiln NPU inference",
+  "type": "module",
+  "scripts": {
+    "setup": "node src/setup.js",
+    "scenarios": "node src/scenarios.js",
+    "audit": "node src/audit.js",
+    "server": "node src/server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "xrpl": "^5.3.0"
+  }
+}

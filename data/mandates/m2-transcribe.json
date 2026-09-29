@@ -1,0 +1,16 @@
+{
+  "v": 1,
+  "id": "m2-transcribe",
+  "owner": "rUoSJbhbVAkyehPR6DLzo8d5dz1Gysknis",
+  "agent": "rNnqoFU2Xxq6J1g8CdopQrNV94RUnDU1hL",
+  "budgetDrops": 5000000,
+  "allow": [
+    {
+      "id": "lumen",
+      "name": "Lumen",
+      "addr": "rNN4EdkqrNbeyVPgcARrHuBuXaTGN7agus"
+    }
+  ],
+  "deadlineUnix": 1790712904,
+  "purpose": "Transcription pack"
+}
